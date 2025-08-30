@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CS55.13 Fall 2025 Week 2: React Import External JSON</title>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="myApp1"></div>
+        <script data-type="module" data-presets="react" type="text/babel">
+            "use strict";
+
+            import React from 'https://cdn.jsdelivr.net/npm/react@19.1.1/+esm';
+            import { createRoot } from 'https://cdn.jsdelivr.net/npm/react-dom@19.1.1/client/+esm';
+
+            function ProjectList1(props1) {
+                return  <main>
+                            <h1>Project List</h1>
+                            <ol>
+                            {
+                                props1.list.map(
+                                    (item1,index1) => (
+                                        <li key={index1}>
+                                            <a href={item1.link}>
+                                                {item1.fullname}
+                                            </a>
+                                        </li>
+                                    )
+                                )
+                            }
+                            </ol>
+                        </main>;
+            }
+            
+            $.getJSON(
+                "/dataXV.json",
+                function(jsonFromJquery1) {
+                    console.log(jsonFromJquery1);
+                    const myElement1 = document.getElementById('myApp1');
+                    const myRoot1 = createRoot(myElement1);
+                    myRoot1.render(
+                        <ProjectList1 list={jsonFromJquery1} />
+                    );
+                }
+            );
+        </script>
+    </body>
+</html>
